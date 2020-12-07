@@ -14,7 +14,9 @@ def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="""Hey there, Dear BookCrush member!
 I can help you request any book in the group easily.
 Also you can make yourself familiar with the rules of @bookcrushgroup.
-Currently I only work in inline mode. so why don't you type "@bkcrushbot grouprules" in the text box below and see what I can show you.""")
+Currently I only work in inline mode. so why don't you type "@bkcrushbot" in the text box below and see how you can request any ebook/audiobook/Kindle Unlimited book.
+You can also try <code>@bkcrushbot grouprules</code> to know the rules of the @bookcrushgroup. <code>@bkcrushbot press</code> to know the rules of @bookcrushpress.
+""", parse_mode='HTMl')
 
 from telegram.ext import CommandHandler
 start_handler = CommandHandler('start', start)
@@ -44,13 +46,13 @@ def inline_caps(update, context):
     results = list()
     if query.lower() == '':
         results.append(
-                InlineQueryResultArticle(
-                id=uuid4(),
-                title='How to use:',
-                input_message_content=InputTextMessageContent("""Type r,BookName(s),AuthorName,AmazonLink(if applicable),Language Tags(if any)""", parse_mode='HTML'),
-                description='Type r,BookName(s),AuthorName,AmazonLink(if applicable),Language Tags(if any)',
-            )
-    )
+                    InlineQueryResultArticle(
+                    id=uuid4(),
+                    title='How to use me to make a request:',
+                    input_message_content=InputTextMessageContent("""Type r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)""", parse_mode='HTML'),
+                    description='Type r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)',
+                )
+        )
     if query.lower() == 'grouprules':
         results.append(
         InlineQueryResultArticle(
@@ -217,57 +219,104 @@ def inline_caps(update, context):
         8.4. <b>Having</b> one or more Alternate IDs so as to bypass the request limit.""", parse_mode='HTML'),
             description='Things you shouldn\'t do to be a good member')
         )
-    if query.lower().startswith('r'):
-            request = query.split(',',4)
-            fullrequest = ''
-            for req in request:
-                if(req == 'r'):
-                    continue;
-                fullrequest = fullrequest + req.strip() + """\n""" 
-            results = list()
+    
+    if query.lower().strip().startswith('r'):
+        request = query.split(',',4)
+        fullrequest = ''
+        for req in request:
+            if(req == 'r'):
+                continue;
+            if(req.isspace()):
+                continue;
+            fullrequest = fullrequest + req.strip() + """\n""" if req.startswith('http') else fullrequest + req.strip().title() + """\n"""
+        results = list()
+        try:
             results.append(
             InlineQueryResultArticle(
             id=uuid4(),
-            title='Request ebook: '+request[1].strip().title(),
+            title='Request ebook: '+request[1].strip().title()+' ; '+request[2].strip().title(),
             input_message_content=InputTextMessageContent("""#request\n"""+
-fullrequest+
-"""#ebook"""
-, parse_mode='HTML', disable_web_page_preview=True),
-            description='Request an ebook',
-            thumb_url='https://telegra.ph/file/f9bc07b2d216238b2a910.png',
-            thumb_width=30,
-            thumb_height=30
+    fullrequest.strip()+
+    """\n#ebook"""
+    , parse_mode='HTML', disable_web_page_preview=True),
+                description='Request an ebook',
+                thumb_url='https://telegra.ph/file/f9bc07b2d216238b2a910.png',
+                thumb_width=30,
+                thumb_height=30
+            )
         )
-    )
-            print(fullrequest)
+        except:
+            #results = list()
+            results.append(
+                InlineQueryResultArticle(
+                id=uuid4(),
+                title='Author Name Missing!',
+                input_message_content=InputTextMessageContent("""<i>Author Name Missing!\nTry again...\nType r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)</i>""", parse_mode='HTML'),
+                description='Type r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)',
+                thumb_url='https://telegra.ph/file/f9bc07b2d216238b2a910.png',
+                thumb_width=30,
+                thumb_height=30
+                )
+            ) 
+    #print(fullrequest)
+        try:
             results.append(
             InlineQueryResultArticle(
             id=uuid4(),
-            title='Request audiobook: '+request[1].strip().title(),
+            title='Request audiobook: '+request[1].strip().title()+' ; '+request[2].strip().title()+' ; '+request[3].strip(),
             input_message_content=InputTextMessageContent("""#request\n"""+ 
-fullrequest+
-"""#audiobook"""
-, parse_mode='HTML', disable_web_page_preview=True),
-            description='Request an Audible Audiobook',
+        fullrequest.strip()+
+        """\n#audiobook"""
+        , parse_mode='HTML', disable_web_page_preview=True),
+                    description='Request an Audible Audiobook',
+                    thumb_url='https://telegra.ph/file/f91a6a03e5592573a6ff4.jpg',
+                    thumb_width=30,
+                    thumb_height=30
+                    )
+                )
+        except:
+            #results = list()
+            results.append(
+            InlineQueryResultArticle(
+            id=uuid4(),
+            title='Audible Link Missing!',
+            input_message_content=InputTextMessageContent("""<i>Audible Link Missing!\nTry again...\nType r,BookName(s),AuthorName,AudibleLink,Language Tags(if any)</i>""", parse_mode='HTML'),
+            description='Type r,BookName(s),AuthorName,AudibleLink,Language Tags(if any)',
             thumb_url='https://telegra.ph/file/f91a6a03e5592573a6ff4.jpg',
             thumb_width=30,
             thumb_height=30
-        )
-    )
+            )
+            )
+        try:
+            print("link is"+request[3])                      
             results.append(
             InlineQueryResultArticle(
             id=uuid4(),
-            title='Request KU book: '+request[1].strip().title(),
+            title='Request KU book: '+request[1].strip().title()+' ; '+request[2].strip().title()+' ; '+request[3].strip(),
             input_message_content=InputTextMessageContent("""#request\n"""+
-fullrequest+
-"""#KU"""
-, parse_mode='HTML', disable_web_page_preview=True),
-            description='Request a Kindle Unlimited ebook',
+        fullrequest.strip()+
+        """\n#KU"""
+        , parse_mode='HTML', disable_web_page_preview=True),
+                    description='Request a Kindle Unlimited ebook',
+                    thumb_url='https://telegra.ph/file/31bdcc94a29e964acc5d9.png',
+                    thumb_width=30,
+                    thumb_height=30
+                    )
+                )
+        except:
+            #results = list()
+            results.append(
+            InlineQueryResultArticle(
+            id=uuid4(),
+            title='KU Link Missing!',
+            input_message_content=InputTextMessageContent("""<i>KU Link Missing!\nTry again...\nType r,BookName(s),AuthorName,Amazon KU Link,Language Tags(if any)</i>""", parse_mode='HTML'),
+            description='Type r,BookName(s),AuthorName,Amazon KU Link,Language Tags(if any)',
             thumb_url='https://telegra.ph/file/31bdcc94a29e964acc5d9.png',
             thumb_width=30,
             thumb_height=30
-        )
-    )
+            )
+            )                       
+   
     if query.lower() == 'format':
             results = list()
             results.append(
