@@ -44,7 +44,7 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 def inline_caps(update, context):
     query = update.inline_query.query
     results = list()
-    if query.lower() == '':
+    if query.lower() == '' or query.lower().strip() == 'help':
         results.append(
                     InlineQueryResultArticle(
                     id=uuid4(),
@@ -53,7 +53,232 @@ def inline_caps(update, context):
                     description='Type r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)',
                 )
         )
-    if query.lower() == 'grouprules':
+    #Individual rules
+    if query.lower().strip() == '1':
+            results = list()
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='1. Before You Request -> 1.1. Verify the name and author of the ebook/audiobook...',
+                input_message_content=InputTextMessageContent("""<b>1. Before You Request</b>
+
+        1.1. Verify the name and author of the ebook/audiobook and that the book has been released in the particular format in which you want(ebook/audiobook).""", parse_mode ='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='1.2. If you want a book series or multiple books...',
+                input_message_content=InputTextMessageContent("""
+        1.2. If you want a <i>book series or multiple books</i> then individually request each one with correct names of the titles.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='1.3. Only request for ebooks which are preferably on...',
+                input_message_content=InputTextMessageContent("""
+        1.3. Only request for ebooks which are preferably on <i>Amazon</i> and audiobooks that are on <i>Audible</i>.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='1.4. DON\'T request for books that are...',
+                input_message_content=InputTextMessageContent("""
+        1.4. <b>DON'T</b> request for books that are;
+
+            1.4.1. Available only in <i>paperback/hardcover</i>.
+
+            1.4.2. Academic textbooks.
+
+            1.4.3. In DMCA list""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='1.5. DON\'T be choosy about...',
+                input_message_content=InputTextMessageContent("""
+        1.5. <b>DON'T</b> be choosy about ebook formats or narrators for audiobooks.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='1.6. DON\'T just send links or covers...',
+                input_message_content=InputTextMessageContent("""
+        1.6. <b>DON'T</b> just send links or covers of books that you want. Instead be a good lad and follow the request format.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='1.7. Search before requesting...',
+                input_message_content=InputTextMessageContent("""
+        1.7. Click on the 🔍 icon in the top right and search if that ebook/audiobook has been shared already in the group. Follow this tutorial on how to search in the group.""", parse_mode='HTML')))
+        
+    if query.lower().strip() == '2':
+            results = list()
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='2. Request Format -> 2.1. If that book has not been shared before, request using...',
+                input_message_content=InputTextMessageContent("""<b>2. Request Format</b>
+
+        2.1. If that book has not been shared before, request using the following format:
+    <code>#request
+    Book's name
+    Author's name 
+    #ebook or #audiobook</code>
+    [Amazon link to audiobook/KU book, if applicable]""", parse_mode ='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='2.2.1. ebook example',
+                input_message_content=InputTextMessageContent("""
+            2.2.1. ebooks:
+    #request
+    Sapiens: A Brief History of Humankind
+    Yuval Noah Harari
+    #ebook""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='2.2.2. Audible Audiobook example',
+                input_message_content=InputTextMessageContent("""
+        2.2.2. Audible Audiobooks:
+    #request
+    Dark Matter
+    Blake Crouch
+    #audiobook
+    https://www.audible.in/pd/Dark-Matter-Audiobook/B07B7BFH4M""", parse_mode='HTML', disable_web_page_preview=True)))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='2.2.3. Kindle Unlimited book example',
+                input_message_content=InputTextMessageContent("""
+        2.2.3. Kindle Unlimited(KU) books:
+    #request
+    Harry Potter and the Chamber of Secrets
+    J.K. Rowling
+    #KU
+    https://www.amazon.in/Harry-Potter-Chamber-Secrets-Rowling-ebook/dp/B019PIOJY0""", parse_mode='HTML', disable_web_page_preview=True)))
+
+    if query.lower().strip() == '3':
+        results.append(
+        InlineQueryResultArticle(
+                id=uuid4(),
+                title='3. Hashtags',
+                input_message_content=InputTextMessageContent("""<b>3. Hashtags</b>
+
+    Include appropriate hashtags in your requests which will help us track them better:
+
+        3.1. For languages other than English, Use #Hindi, #Marathi, #Spanish and so on.
+
+        3.2. For Kindle Unlimited - #KU ; Audible Audiobooks - #audiobook or #audible (provide their links as well).""", parse_mode='HTML'),
+                description='Hashtags to include in your request'
+            )
+        )
+    if query.lower().strip() == '4':
+        results.append(
+        InlineQueryResultArticle(
+                id=uuid4(),
+                title='4. Request Limits',
+                input_message_content=InputTextMessageContent("""<b>4. Request Limits</b>
+
+        4.1. <b>DON'T</b> request for more than 3 books(ebooks+audiobooks) in a day. Exceeding it will trigger @ShiiinaBot to delete your request and you will have to wait for 24 hours to request again. Deleting and re-requesting if you made any mistake in your original request will not reset the count, instead learn how to Edit your message.
+
+        4.2. <b>Hoarding</b> books(even within request limit) is strictly not tolerated. Request only what you want to read/listen in the near future.""", parse_mode='HTML'),
+            description='How many can you request per day?')
+        )
+    if query.lower().strip() == '5':
+            results = list()
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='5. After you request -> 5.1. Sit back and wait, DON\'T tag or PM admins...',
+                input_message_content=InputTextMessageContent("""<b>5. After You Request</b> 
+
+        5.1. Sit back and wait, DON'T tag or PM admins. """, parse_mode ='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='5.2. Asking Updates',
+                input_message_content=InputTextMessageContent("""
+        5.2. <b>DON'T</b> ask for updates on the book before 48 hours. You will receive an @ notification from a contributor or BookCrush Buddy when it is fulfilled.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='5.3. Wait 48 Hours',
+                input_message_content=InputTextMessageContent("""
+        5.3. If your request is not fulfilled, repost after <b>48 hours</b>. Subsequent reminders should also be spaced out 48 hours between each one.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='5.4. DON\'T ask for specific format',
+                input_message_content=InputTextMessageContent("""
+        5.4. After you get the book, <b>DON'T</b> be lazy and ask us for a specific format like pdf, epub etc. Convert it yourself online(@SmartConverter_bot or @cloud_convert_bot). """, parse_mode='HTML')))
+
+    if query.lower().strip() == '6':
+            results = list()
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='6. Communication -> 6.1. Use English at all times....',
+                input_message_content=InputTextMessageContent("""<b>6. Communication</b>
+
+        6.1. Use English at all times. """, parse_mode ='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='6.2. Asking Updates',
+                input_message_content=InputTextMessageContent("""
+        6.2. Refrain from any off-topic chatter.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='6.3. Wait 48 Hours',
+                input_message_content=InputTextMessageContent("""
+        6.3. <b>DON'T</b> PM any group member without permission.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='6.4. DON\'T ask for specific format',
+                input_message_content=InputTextMessageContent("""
+        6.4. <b>DON'T</b> spam with gifs/stickers, promotional messages or channel/group invites(t.me links) either in group or in PM. """, parse_mode='HTML')))
+    
+    if query.lower().strip() == '7':
+        results.append(
+        InlineQueryResultArticle(
+                id=uuid4(),
+                title='7. Disallowed Names/Usernames',
+                input_message_content=InputTextMessageContent("""<b>7. Disallowed Names/Usernames</b>
+
+        7.1. Names/Usernames containing single letter/double letters, NSFW words, Just emojis, special characters, punctuation marks or Annoying Unicode/RTL characters which mess up the Telegram UI. 
+
+        <i>Anyone violating this rule will be muted until the username no longer violates any of the above conditions. Message any admin to be un-muted once you comply with the name rule.</i>""", parse_mode='HTML'),
+            )
+        )
+    if query.lower().strip() == '8':
+            results = list()
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='8. What will get you muted/kicked/(f)banned? -> 8.1. Violating any of the....',
+                input_message_content=InputTextMessageContent("""<b>8. What will get you muted/kicked/(f)banned?</b>
+
+        8.1. <b>Violating</b> any of the above rules(1-7) will be first met with a friendly notice, repeated violations will each lead to a warning and 5 such warnings to getting muted forever.""", parse_mode ='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='8.2. Abuse',
+                input_message_content=InputTextMessageContent("""
+        8.2. <b>Abusing</b> members/admins in PM will directly lead to getting fedbanned in all BookCrush groups.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='8.3. Hoarding',
+                input_message_content=InputTextMessageContent("""
+        8.3. <b>Hoarding</b> books without considering the time and effort of admins/contributors that goes into ripping ebooks/audiobooks. Such violators will be tracked and muted/banned accordingly.""", parse_mode='HTML')))
+            results.append(
+            InlineQueryResultArticle(
+                id=uuid4(),
+                title='8.4. Alt IDs',
+                input_message_content=InputTextMessageContent("""
+        8.4. <b>Having</b> one or more Alternate IDs so as to bypass the request limit. """, parse_mode='HTML')))
+
+    #END of individual rules
+    #Full group rules
+    if query.lower().startswith('grouprules'):
         results.append(
         InlineQueryResultArticle(
                 id=uuid4(),
@@ -95,6 +320,7 @@ def inline_caps(update, context):
         1.7. Click on the 🔍 icon in the top right and search if that ebook/audiobook has been shared already in the group. Follow this tutorial on how to search in the group.""", parse_mode='HTML'),
             description='What you need to remember before requesting?')
         )
+        
         
         results.append(
             InlineQueryResultArticle(
@@ -220,15 +446,16 @@ def inline_caps(update, context):
             description='Things you shouldn\'t do to be a good member')
         )
     
+    #requesting using the bot
     if query.lower().strip().startswith('r'):
         request = query.split(',',4)
         fullrequest = ''
         for req in request:
             if(req == 'r'):
                 continue;
-            if(req.isspace()):
-                continue;
-            fullrequest = fullrequest + req.strip() + """\n""" if req.startswith('http') else fullrequest + req.strip().title() + """\n"""
+            #if(req.isspace()):
+            #    continue;
+            fullrequest = fullrequest + req.strip() + """\n""" #if req.startswith('http') else fullrequest + req.strip().title() + """\n"""
         results = list()
         try:
             results.append(
@@ -316,7 +543,7 @@ def inline_caps(update, context):
             thumb_height=30
             )
             )                       
-   
+    #request format
     if query.lower() == 'format':
             results = list()
             results.append(
@@ -330,6 +557,7 @@ Author's name
 [Amazon link to audiobook/KU book, if applicable]</code>""", parse_mode='HTML'),
         )
     )
+    #bookcrushpress rules
     if query.lower() == 'press':
             results = list()
             results.append(
