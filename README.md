@@ -1,2 +1,2 @@
 # bookcrush rules bot
-BookCrush Rules Bot
+BookCrush Request and Rules Bot
