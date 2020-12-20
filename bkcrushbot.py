@@ -50,7 +50,7 @@ def inline_caps(update, context):
                     id=uuid4(),
                     title='How to use me to make a request:',
                     input_message_content=InputTextMessageContent("""Type r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)""", parse_mode='HTML'),
-                    description='Type r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)',
+                    description='Type r, BookName(s), AuthorName, AmazonLink(for audible/KU), Language Tags(if any)',
                 )
         )
     #Individual rules
@@ -84,9 +84,9 @@ def inline_caps(update, context):
 
             1.4.1. Available only in <i>paperback/hardcover</i>.
 
-            1.4.2. Academic textbooks.
+            1.4.2. <a href="https://t.me/BookCrushGroup/165744">Academic textbooks</a>.
 
-            1.4.3. In DMCA list""", parse_mode='HTML')))
+            1.4.3. In <a href="https://t.me/BookCrushGroup/141180">DMCA list</a>""", parse_mode='HTML', disable_web_page_preview=True)))
             results.append(
             InlineQueryResultArticle(
                 id=uuid4(),
@@ -126,32 +126,32 @@ def inline_caps(update, context):
                 title='2.2.1. ebook example',
                 input_message_content=InputTextMessageContent("""
             2.2.1. ebooks:
-    #request
+    <code>#request
     Sapiens: A Brief History of Humankind
     Yuval Noah Harari
-    #ebook""", parse_mode='HTML')))
+    #ebook</code>""", parse_mode='HTML')))
             results.append(
             InlineQueryResultArticle(
                 id=uuid4(),
                 title='2.2.2. Audible Audiobook example',
                 input_message_content=InputTextMessageContent("""
         2.2.2. Audible Audiobooks:
-    #request
+    <code>#request
     Dark Matter
     Blake Crouch
     #audiobook
-    https://www.audible.in/pd/Dark-Matter-Audiobook/B07B7BFH4M""", parse_mode='HTML', disable_web_page_preview=True)))
+    https://www.audible.in/pd/Dark-Matter-Audiobook/B07B7BFH4M</code>""", parse_mode='HTML', disable_web_page_preview=True)))
             results.append(
             InlineQueryResultArticle(
                 id=uuid4(),
                 title='2.2.3. Kindle Unlimited book example',
                 input_message_content=InputTextMessageContent("""
         2.2.3. Kindle Unlimited(KU) books:
-    #request
+    <code>#request
     Harry Potter and the Chamber of Secrets
     J.K. Rowling
     #KU
-    https://www.amazon.in/Harry-Potter-Chamber-Secrets-Rowling-ebook/dp/B019PIOJY0""", parse_mode='HTML', disable_web_page_preview=True)))
+    https://www.amazon.in/Harry-Potter-Chamber-Secrets-Rowling-ebook/dp/B019PIOJY0</code>""", parse_mode='HTML', disable_web_page_preview=True)))
 
     if query.lower().strip() == '3':
         results.append(
@@ -162,9 +162,9 @@ def inline_caps(update, context):
 
     Include appropriate hashtags in your requests which will help us track them better:
 
-        3.1. For languages other than English, Use #Hindi, #Marathi, #Spanish and so on.
+        3.1. For languages other than English, Use <code>#Hindi</code>, <code>#Marathi</code>, <code>#Spanish</code> and so on.
 
-        3.2. For Kindle Unlimited - #KU ; Audible Audiobooks - #audiobook or #audible (provide their links as well).""", parse_mode='HTML'),
+        3.2. For Kindle Unlimited - <code>#KU</code> ; Audible Audiobooks - <code>#audiobook</code> or #audible (provide their links as well).""", parse_mode='HTML'),
                 description='Hashtags to include in your request'
             )
         )
@@ -309,9 +309,9 @@ def inline_caps(update, context):
 
             1.4.1. Available only in <i>paperback/hardcover</i>.
 
-            1.4.2. Academic textbooks.
+            1.4.2. <a href="https://t.me/BookCrushGroup/165744">Academic textbooks</a>.
 
-            1.4.3. In DMCA list
+            1.4.3. In <a href="https://t.me/BookCrushGroup/141180">DMCA list</a>.
 
         1.5. <b>DON'T</b> be choosy about ebook formats or narrators for audiobooks.
 
@@ -338,24 +338,24 @@ def inline_caps(update, context):
         2.2. Examples
 
             2.2.1. ebooks:
-    #request
+    <code>#request
     Sapiens: A Brief History of Humankind
     Yuval Noah Harari
-    #ebook
+    #ebook</code>
 
             2.2.2. Audible Audiobooks:
-    #request
+    <code>#request
     Dark Matter
     Blake Crouch
     #audiobook
-    https://www.audible.in/pd/Dark-Matter-Audiobook/B07B7BFH4M
+    https://www.audible.in/pd/Dark-Matter-Audiobook/B07B7BFH4M</code>
 
             2.2.3. Kindle Unlimited(KU) books:
-    #request
+    <code>#request
     Harry Potter and the Chamber of Secrets
     J.K. Rowling
     #KU
-    https://www.amazon.in/Harry-Potter-Chamber-Secrets-Rowling-ebook/dp/B019PIOJY0""", parse_mode='HTML')
+    https://www.amazon.in/Harry-Potter-Chamber-Secrets-Rowling-ebook/dp/B019PIOJY0</code>""", parse_mode='HTML')
             )
         )
 
@@ -367,9 +367,9 @@ def inline_caps(update, context):
 
     Include appropriate hashtags in your requests which will help us track them better:
 
-        3.1. For languages other than English, Use #Hindi, #Marathi, #Spanish and so on.
+        3.1. For languages other than English, Use <code>#Hindi</code>, <code>#Marathi</code>, <code>#Spanish</code> and so on.
 
-        3.2. For Kindle Unlimited - #KU ; Audible Audiobooks - #audiobook or #audible (provide their links as well).""", parse_mode='HTML'),
+        3.2. For Kindle Unlimited - <code>#KU</code> ; Audible Audiobooks - <code>#audiobook</code> or #audible (provide their links as well).""", parse_mode='HTML'),
                 description='Hashtags to include in your request'
             )
         )
@@ -446,8 +446,10 @@ def inline_caps(update, context):
             description='Things you shouldn\'t do to be a good member')
         )
     
+    from telegram import InlineKeyboardButton, InlineKeyboardMarkup
     #requesting using the bot
     if query.lower().strip().startswith('r'):
+        origquery = query
         request = query.split(',',4)
         fullrequest = ''
         for req in request:
@@ -457,6 +459,16 @@ def inline_caps(update, context):
             #    continue;
             fullrequest = fullrequest + req.strip() + """\n""" #if req.startswith('http') else fullrequest + req.strip().title() + """\n"""
         results = list()
+        keyboard = [
+        [
+            InlineKeyboardButton("Repost/Edit", switch_inline_query_current_chat=origquery),
+            
+        #],
+        #[
+            InlineKeyboardButton("New Request", switch_inline_query_current_chat=''),
+        ]
+        ]
+        markup = InlineKeyboardMarkup(keyboard)
         try:
             results.append(
             InlineQueryResultArticle(
@@ -466,6 +478,7 @@ def inline_caps(update, context):
     fullrequest.strip()+
     """\n#ebook"""
     , parse_mode='HTML', disable_web_page_preview=True),
+                reply_markup= markup,
                 description='Request an ebook',
                 thumb_url='https://telegra.ph/file/f9bc07b2d216238b2a910.png',
                 thumb_width=30,
@@ -478,8 +491,8 @@ def inline_caps(update, context):
                 InlineQueryResultArticle(
                 id=uuid4(),
                 title='Author Name Missing!',
-                input_message_content=InputTextMessageContent("""<i>Author Name Missing!\nTry again...\nType r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)</i>""", parse_mode='HTML'),
-                description='Type r,BookName(s),AuthorName,AmazonLink(for audible/KU),Language Tags(if any)',
+                input_message_content=InputTextMessageContent("""<i>Author Name Missing!\nTry again...\nType r, BookName(s), AuthorName, Language Tags(if any)</i>""", parse_mode='HTML'),
+                description='Type r, BookName(s), AuthorName, Language Tags(if any)',
                 thumb_url='https://telegra.ph/file/f9bc07b2d216238b2a910.png',
                 thumb_width=30,
                 thumb_height=30
@@ -495,6 +508,7 @@ def inline_caps(update, context):
         fullrequest.strip()+
         """\n#audiobook"""
         , parse_mode='HTML', disable_web_page_preview=True),
+                    reply_markup= markup,
                     description='Request an Audible Audiobook',
                     thumb_url='https://telegra.ph/file/f91a6a03e5592573a6ff4.jpg',
                     thumb_width=30,
@@ -507,8 +521,8 @@ def inline_caps(update, context):
             InlineQueryResultArticle(
             id=uuid4(),
             title='Audible Link Missing!',
-            input_message_content=InputTextMessageContent("""<i>Audible Link Missing!\nTry again...\nType r,BookName(s),AuthorName,AudibleLink,Language Tags(if any)</i>""", parse_mode='HTML'),
-            description='Type r,BookName(s),AuthorName,AudibleLink,Language Tags(if any)',
+            input_message_content=InputTextMessageContent("""<i>Audible Link Missing!\nTry again...\nType r, BookName(s), AuthorName, AudibleLink, Language Tags(if any)</i>""", parse_mode='HTML'),
+            description='Type r, BookName(s), AuthorName, AudibleLink, Language Tags(if any)',
             thumb_url='https://telegra.ph/file/f91a6a03e5592573a6ff4.jpg',
             thumb_width=30,
             thumb_height=30
@@ -524,6 +538,7 @@ def inline_caps(update, context):
         fullrequest.strip()+
         """\n#KU"""
         , parse_mode='HTML', disable_web_page_preview=True),
+                    reply_markup= markup,
                     description='Request a Kindle Unlimited ebook',
                     thumb_url='https://telegra.ph/file/31bdcc94a29e964acc5d9.png',
                     thumb_width=30,
@@ -536,8 +551,8 @@ def inline_caps(update, context):
             InlineQueryResultArticle(
             id=uuid4(),
             title='KU Link Missing!',
-            input_message_content=InputTextMessageContent("""<i>KU Link Missing!\nTry again...\nType r,BookName(s),AuthorName,Amazon KU Link,Language Tags(if any)</i>""", parse_mode='HTML'),
-            description='Type r,BookName(s),AuthorName,Amazon KU Link,Language Tags(if any)',
+            input_message_content=InputTextMessageContent("""<i>KU Link Missing!\nTry again...\nType r, BookName(s), AuthorName, Amazon KU Link, Language Tags(if any)</i>""", parse_mode='HTML'),
+            description='Type r, BookName(s), AuthorName, Amazon KU Link, Language Tags(if any)',
             thumb_url='https://telegra.ph/file/31bdcc94a29e964acc5d9.png',
             thumb_width=30,
             thumb_height=30
